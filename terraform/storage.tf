@@ -17,11 +17,11 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "bucket_encryption
   }
 }
 
-resource "aws_s3_bucket_acl" "bucket_acl" {
-  count  = length(var.bucket_names)
-  bucket = "${var.prefix}-${var.bucket_names[count.index]}"
-  acl    = "private"
-}
+# resource "aws_s3_bucket_acl" "bucket_acl" {
+#   count  = length(var.bucket_names)
+#   bucket = "${var.prefix}-${var.bucket_names[count.index]}"
+#   acl    = "private"
+# }
 
 # tirando o acesso ao publico
 resource "aws_s3_bucket_public_access_block" "public_access_block" {
