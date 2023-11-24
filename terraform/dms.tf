@@ -1,4 +1,5 @@
 data "aws_caller_identity" "current" {}
+data "aws_partition" "current" {}
 
 module "database_migration_service" {
   source  = "terraform-aws-modules/dms/aws"
@@ -24,7 +25,6 @@ module "database_migration_service" {
       endpoint_id                 = "source-mysql-dms"
       endpoint_type               = "source"
       engine_name                 = aws_db_instance.default.engine
-      extra_connection_attributes = "heartbeatFrequency=1;"
       username                    = aws_db_instance.default.username
       password                    = aws_db_instance.default.password
       port                        = 3306
