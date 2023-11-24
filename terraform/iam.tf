@@ -31,7 +31,7 @@ resource "aws_iam_role" "s3_role" {
         Action = "sts:AssumeRole"
         Effect = "Allow"
         Principal = {
-          Service = "database_migration_service.${data.aws_partition.current.dns_suffix}"
+          Service = "dms.${data.aws_partition.current.dns_suffix}"
         }
       },
     ]

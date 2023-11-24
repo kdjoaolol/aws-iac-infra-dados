@@ -1,5 +1,6 @@
 data "aws_caller_identity" "current" {}
 data "aws_partition" "current" {}
+data "aws_caller_identity" "current" {}
 
 module "database_migration_service" {
   source  = "terraform-aws-modules/dms/aws"
