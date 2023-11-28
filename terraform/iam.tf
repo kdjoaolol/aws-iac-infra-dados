@@ -1,22 +1,3 @@
-resource "aws_iam_role" "cloudwatch_lambda" {
-  name               = "${local.prefix}_Role_cloudwatch"
-  path               = "/"
-  description        = "Provides write permissions to CloudWatch Logs and S3 Full Access"
-  assume_role_policy = file("./permissions/lambda_invoke_role.json")
-}
-
-resource "aws_iam_policy" "cloudwatch_lambda" {
-  name        = "${local.prefix}_Policy_cloudwatch"
-  path        = "/"
-  description = "Permissão para o cloudwatch triggar a lambda function"
-  policy      = file("./permissions/lambda_invoke_policy.json")
-}
-
-resource "aws_iam_role_policy_attachment" "cloudwatch_attach" {
-  role       = aws_iam_role.cloudwatch_lambda.name
-  policy_arn = aws_iam_policy.cloudwatch_lambda.arn
-}
-
 # DMS 
 
 resource "aws_iam_role" "s3_role" {
@@ -27,11 +8,11 @@ resource "aws_iam_role" "s3_role" {
     Version = "2012-10-17"
     Statement = [
       {
-        Sid    = "DMSAssume"
+        Sid    = "DMSS3"
         Action = "sts:AssumeRole"
         Effect = "Allow"
         Principal = {
-          Service = "dms.${data.aws_partition.current.dns_suffix}"
+          Service = "dms.amazonaws.com"
         }
       },
     ]
