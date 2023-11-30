@@ -7,7 +7,7 @@ module "database_migration_service" {
   # Subnet group
   repl_subnet_group_name        = "example"
   repl_subnet_group_description = "DMS Subnet group"
-  repl_subnet_group_subnet_ids  = [module.vpc.public_subnets[0], module.vpc.public_subnets[1], module.vpc.public_subnets[2]]
+  repl_subnet_group_subnet_ids  = [module.vpc.database_subnets[0], module.vpc.database_subnets[1], module.vpc.database_subnets[2]]
 
 
   # Instance
@@ -39,13 +39,11 @@ module "database_migration_service" {
       endpoint_type               = "target"
       engine_name                 = "s3"
       extra_connection_attributes = "DataFormat=parquet;parquetVersion=PARQUET_2_0;"
+      service_access_role_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/dms-s3-role"
       bucket_name                 = aws_s3_bucket_public_access_block.public_access_block[0].bucket # landing zone
-      s3_settings = {
-        bucket_folder           = "mysql-main-app"
-        compression_type        = "GZIP"
-        service_access_role_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/dms-s3-role"
-        data_format             = "parquet"
-      }
+      bucket_folder           = "mysql-main-app"
+      compression_type        = "GZIP"
+      data_format             = "parquet"
     }
   }
 
