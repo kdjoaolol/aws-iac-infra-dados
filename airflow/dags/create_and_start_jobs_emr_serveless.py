@@ -5,8 +5,16 @@ from datetime import datetime, timedelta
 from airflow.decorators import dag, task
 from airflow.operators.empty import EmptyOperator
 
+from airflow.providers.amazon.aws.operators.emr import (
+    EmrServerlessDeleteApplicationOperator,
+    EmrServerlessStartJobOperator,
+    EmrServerlessStopApplicationOperator,
+)
+
 
 AWS_CONN_ID = "creds-via-terraform-env"
+APPLICATION_EMR = "aplication-spark-jobs"
+JOB_ID = "start_emr_serverless_job"
 
 # argumentos padrões da minha dag
 default_args = {
@@ -28,7 +36,24 @@ def create_and_start_jobs_emr_serveless():
 
     init = EmptyOperator(task_id="init")
 
-    # desenvolver criação e ativação de job no emr serveless
+    start_job = EmrServerlessStartJobOperator(
+    task_id="start_emr_serverless_job",
+    application_id=APPLICATION_EMR, # TODO COLOCAR DE FORMA DINAMICA QUANDO SUBIR PARA O AIRFLOW PARA O AWS
+    execution_role_arn=role_arn,
+    job_driver=SPARK_JOB_DRIVER,
+    configuration_overrides=SPARK_CONFIGURATION_OVERRIDES,
+    )
+
+    stop_app = EmrServerlessStopApplicationOperator(
+    task_id="stop_application",
+    application_id=APPLICATION_EMR,
+    force_stop=True,
+    )
+
+    delete_app = EmrServerlessDeleteApplicationOperator(
+    task_id="delete_application",
+    application_id=APPLICATION_EMR,
+    )
 
     finish = EmptyOperator(task_id="finish")
 

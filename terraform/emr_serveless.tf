@@ -1,23 +1,23 @@
-# module "emr_studio" {
-#   source = "terraform-aws-modules/emr/aws//modules/studio"
+module "emr_studio" {
+  source = "terraform-aws-modules/emr/aws//modules/studio"
 
-#   name                = "studio-emr"
-#   auth_mode           = "IAM"
-#   default_s3_location = "s3://example-s3-bucket/example"
+  name                = "studio-emr"
+  auth_mode           = "IAM"
+  default_s3_location = "s3://example-s3-bucket/example"
 
-#   vpc_id     = module.vpc.vpc_id
-#   subnet_ids = [module.vpc.database_subnets[0], module.vpc.database_subnets[1], module.vpc.database_subnets[2]]
+  vpc_id     = module.vpc.vpc_id
+  subnet_ids = [module.vpc.database_subnets[0], module.vpc.database_subnets[1], module.vpc.database_subnets[2]]
 
-#   tags = {
-#     Terraform   = "true"
-#     Environment = "dev"
-#   }
-# }
+  tags = {
+    Terraform   = "true"
+    Environment = "dev"
+  }
+}
 
 module "emr_serverless" {
   source = "terraform-aws-modules/emr/aws//modules/serverless"
 
-  name = "example-spark"
+  name = "aplication-spark-jobs"
 
   release_label_prefix = "emr-6.6.0"
 

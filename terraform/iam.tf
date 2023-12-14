@@ -55,3 +55,22 @@ resource "aws_iam_role_policy_attachment" "dms-vpc-role-AmazonDMSVPCManagementRo
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonDMSVPCManagementRole"
   role       = aws_iam_role.dms-vpc-role.name
 }
+
+resource "aws_iam_role" "emr_serverless_spark" {
+  name               = "${local.prefix}_Role_Emr_Serverless_s3_glue"
+  path               = "/"
+  description        = "Permissão para emr serverless acessar todos os recursos necessários"
+  assume_role_policy = file("./permissions/emr_serverless_role.json")
+}
+
+resource "aws_iam_policy" "emr_serverless_spark" {
+  name        = "${local.prefix}_Policy_Emr_Serverless_s3_glue"
+  path        = "/"
+  description = "Permissão para emr serverless acessar todos os recursos necessários"
+  policy      = file("./permissions/emr_serverless_policy.json")
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_attach" {
+  role       = aws_iam_role.lambda_s3.name
+  policy_arn = aws_iam_policy.lambda_s3.arn
+}
