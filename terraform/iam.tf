@@ -70,7 +70,7 @@ resource "aws_iam_policy" "emr_serverless_spark" {
   policy      = file("./permissions/emr_serverless_policy.json")
 }
 
-resource "aws_iam_role_policy_attachment" "lambda_attach" {
-  role       = aws_iam_role.lambda_s3.name
-  policy_arn = aws_iam_policy.lambda_s3.arn
+resource "aws_iam_role_policy_attachment" "emr_serverless_spark" {
+  role       = aws_iam_role.emr_serverless_spark.name
+  policy_arn = aws_iam_policy.emr_serverless_spark.arn
 }

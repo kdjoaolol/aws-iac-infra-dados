@@ -1,19 +1,3 @@
-module "emr_studio" {
-  source = "terraform-aws-modules/emr/aws//modules/studio"
-
-  name                = "studio-emr"
-  auth_mode           = "IAM"
-  default_s3_location = "s3://example-s3-bucket/example"
-
-  vpc_id     = module.vpc.vpc_id
-  subnet_ids = [module.vpc.database_subnets[0], module.vpc.database_subnets[1], module.vpc.database_subnets[2]]
-
-  tags = {
-    Terraform   = "true"
-    Environment = "dev"
-  }
-}
-
 module "emr_serverless" {
   source = "terraform-aws-modules/emr/aws//modules/serverless"
 
