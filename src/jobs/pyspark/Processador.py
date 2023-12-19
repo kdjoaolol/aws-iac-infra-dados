@@ -1,6 +1,7 @@
 from pyspark.sql import SparkSession
 from delta.tables import *
 
+
 class Processador():
     def __init__(
             self,
@@ -19,6 +20,8 @@ class Processador():
 
     def landing_para_bronze(self, table: str, input_format: str):
 
+        self.spark.setLogLevel("INFO")
+
         dataset = self.spark.read.format(input_format).load(f"s3a://{self.landing_bucket}/mysql-main-app/databasemysqliac/{table}")
         dataset.write.mode('overwrite').format("delta").save(f"s3a://{self.bronze_bucket}/{table}")
 
@@ -33,4 +36,4 @@ if __name__ == "__main__":
     
     delta.landing_para_bronze(
                                 table = "credit_score",
-                                format = "parquet")
+                                input_format = "parquet")

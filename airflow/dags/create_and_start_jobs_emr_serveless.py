@@ -22,7 +22,7 @@ JOB_ID = "start_emr_serverless_job"
 # argumentos padrões da minha dag
 default_args = {
     "owner": "Jv",
-    "retries": 1,
+    "retries": 0,
     "retry_delay": 0
 }
 
@@ -43,13 +43,28 @@ def create_and_start_jobs_emr_serveless():
     task_id=JOB_ID,
     application_id=APPLICATION_EMR, # TODO COLOCAR DE FORMA DINAMICA QUANDO SUBIR PARA O AIRFLOW PARA O AWS
     execution_role_arn='arn:aws:iam::932084528194:role/iac_Role_Emr_Serverless_s3_glue',
-    job_driver={ 
+    job_driver = { 
                     "sparkSubmit": {
                         "entryPoint": "s3://iac-scripts-jvam-iac/Processador.py",
+                        "sparkSubmitParameters": "--deploy-mode cluster \
+                            --conf spark.dynamicAllocation.enabled=true \
+                            --conf spark.shuffle.service.enabled=true \
+                            --conf spark.executor.cores=1 \
+                            --conf spark.executor.memory=4g \
+                            --conf spark.driver.cores=1 \
+                            --conf spark.driver.memory=4g \
+                            --conf spark.executor.instances=1",
                     }
                 },
-    configuration_overrides=None
-    )
+    configuration_overrides = {  
+        "monitoringConfiguration": {
+            "s3MonitoringConfiguration": {
+                "logUri": f"s3://scripts-jvam-iac/logs/"
+            }
+        },
+    },
+    config={"name": "landing-to-bronze-delta"}
+)
 
     finish = EmptyOperator(task_id="finish")
 
