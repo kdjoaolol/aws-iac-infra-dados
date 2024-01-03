@@ -33,8 +33,8 @@ module "emr_serverless" {
   }
 
   maximum_capacity = {
-    cpu    = "2 vCPU"
-    memory = "4 GB"
+    cpu    = "1 vCPU"
+    memory = "2 GB"
   }
 
   network_configuration = {
