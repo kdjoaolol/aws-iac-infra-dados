@@ -22,7 +22,7 @@ module "emr_serverless" {
       initial_capacity_type = "Executor"
 
       initial_capacity_config = {
-        worker_count = 1
+        worker_count = 2
         worker_configuration = {
           cpu    = "1 vCPU"
           disk   = "20 GB"
@@ -33,12 +33,12 @@ module "emr_serverless" {
   }
 
   maximum_capacity = {
-    cpu    = "1 vCPU"
-    memory = "2 GB"
+    cpu    = "4 vCPU"
+    memory = "10 GB"
   }
 
   network_configuration = {
-    subnet_ids = [module.vpc.database_subnets[0], module.vpc.database_subnets[1], module.vpc.database_subnets[2]]
+    subnet_ids = [module.vpc.public_subnets[0], module.vpc.public_subnets[1], module.vpc.public_subnets[2]]
   }
 
   security_group_name  = aws_security_group.allow_mysql.name

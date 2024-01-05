@@ -11,7 +11,7 @@ module "database_migration_service" {
 
 
   # Instance
-  repl_instance_apply_immediately      = true
+  repl_instance_apply_immediately      = false
   repl_instance_multi_az               = false
   repl_instance_class                  = "dms.t2.micro"
   repl_instance_id                     = "dmsInstance"

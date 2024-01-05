@@ -15,7 +15,7 @@ from airflow.providers.amazon.aws.operators.emr import (
 )
 
 
-APPLICATION_EMR = "00ffjtabh0stkl09"
+APPLICATION_EMR = "00fg1jv2en78h509"
 JOB_ID = "start_emr_serverless_job"
 
 
@@ -42,24 +42,27 @@ def create_and_start_jobs_emr_serveless():
     start_job = EmrServerlessStartJobOperator(
     task_id=JOB_ID,
     application_id=APPLICATION_EMR, # TODO COLOCAR DE FORMA DINAMICA QUANDO SUBIR PARA O AIRFLOW PARA O AWS
-    execution_role_arn='arn:aws:iam::932084528194:role/iac_Role_Emr_Serverless_s3_glue',
+    execution_role_arn='arn:aws:iam::628381083261:role/iac_Role_Emr_Serverless_s3_glue',
     job_driver = { 
                     "sparkSubmit": {
                         "entryPoint": "s3://iac-scripts-jvam-iac/Processador.py",
-                        "sparkSubmitParameters": "--deploy-mode cluster \
-                            --conf spark.dynamicAllocation.enabled=true \
-                            --conf spark.shuffle.service.enabled=true \
-                            --conf spark.executor.cores=1 \
-                            --conf spark.executor.memory=4g \
+                        "sparkSubmitParameters": "--conf spark.executor.cores=1 \
+                            --conf spark.executor.memory=2g \
                             --conf spark.driver.cores=1 \
-                            --conf spark.driver.memory=4g \
+                            --conf spark.driver.memory=2g \
                             --conf spark.executor.instances=1",
                     }
                 },
     configuration_overrides = {  
         "monitoringConfiguration": {
+            "managedPersistenceMonitoringConfiguration": {
+            "enabled": True
+            },
+            "cloudWatchLoggingConfiguration": {
+            "enabled": True
+            },
             "s3MonitoringConfiguration": {
-                "logUri": f"s3://scripts-jvam-iac/logs/"
+                "logUri": f"s3://iac-scripts-jvam-iac/"
             }
         },
     },
