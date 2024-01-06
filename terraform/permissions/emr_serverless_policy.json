@@ -7,7 +7,7 @@
             "Action": [
                 "s3:*"
             ],
-            "Resource": ["*"]
+            "Resource": "*"
         },
         {
             "Sid": "FullAccessGlue",
@@ -15,7 +15,15 @@
             "Action": [
                 "glue:*"
             ],
-            "Resource": ["*"]
+            "Resource": "*"
+        },
+        {
+            "Sid": "FullAccessLogs",
+            "Effect": "Allow",
+            "Action": [
+                "logs:*"
+            ],
+            "Resource": "*"
         }
     ]
 }

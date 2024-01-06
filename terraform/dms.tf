@@ -11,10 +11,10 @@ module "database_migration_service" {
 
 
   # Instance
-  repl_instance_apply_immediately      = false
+  repl_instance_apply_immediately      = false # alterado verificar impacto
   repl_instance_multi_az               = false
   repl_instance_class                  = "dms.t2.micro"
-  repl_instance_id                     = "dmsInstance"
+  repl_instance_id                     = "dmsinstance"
   repl_instance_publicly_accessible    = true
   repl_instance_vpc_security_group_ids = [aws_security_group.allow_mysql.id]
 
@@ -49,7 +49,7 @@ module "database_migration_service" {
 
   replication_tasks = {
     s3_import = {
-      replication_task_id = "mysqlToS3"
+      replication_task_id = "mysqltos3"
       migration_type      = "full-load"
       table_mappings      = file("configs/table_mappings.json")
       source_endpoint_key = "source"

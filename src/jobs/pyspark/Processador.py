@@ -20,7 +20,7 @@ class Processador():
 
     def landing_para_bronze(self, table: str, input_format: str):
 
-        self.spark.setLogLevel("INFO")
+        self.spark.sparkContext.setLogLevel("INFO")
 
         dataset = self.spark.read.format(input_format).load(f"s3a://{self.landing_bucket}/mysql-main-app/databasemysqliac/{table}")
         dataset.write.mode('overwrite').format("parquet").save(f"s3a://{self.bronze_bucket}/{table}")
@@ -29,10 +29,10 @@ class Processador():
         # deltaTable.generate("symlink_format_manifest")
 
 if __name__ == "__main__":
-    delta = Processador(landing_zone_bucket = "landing-jvam-iac", 
-                            bronze_bucket = "bronze-jvam-iac",
-                            silver_bucket = "silver-jvam-iac",
-                            gold_bucket= "gold-jvam-iac")
+    delta = Processador(landing_bucket = "iac-landing-jvam-iac", 
+                        bronze_bucket = "iac-bronze-jvam-iac",
+                        silver_bucket = "iac-silver-jvam-iac",
+                        gold_bucket= "iac-gold-jvam-iac")
     
     delta.landing_para_bronze(
                                 table = "credit_score",

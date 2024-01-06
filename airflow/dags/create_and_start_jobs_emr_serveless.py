@@ -15,7 +15,7 @@ from airflow.providers.amazon.aws.operators.emr import (
 )
 
 
-APPLICATION_EMR = "00fg1jv2en78h509"
+APPLICATION_EMR = "00fg30hapulc9e09"
 JOB_ID = "start_emr_serverless_job"
 
 
@@ -29,7 +29,7 @@ default_args = {
 @dag(
     dag_id="create_and_start_jobs_emr_serveless",
     start_date=datetime(2023,12,6),
-    schedule_interval=timedelta(hours=1),
+    schedule_interval=None,
     max_active_runs=1,
     catchup=False,
     default_args=default_args,
@@ -46,11 +46,11 @@ def create_and_start_jobs_emr_serveless():
     job_driver = { 
                     "sparkSubmit": {
                         "entryPoint": "s3://iac-scripts-jvam-iac/Processador.py",
-                        "sparkSubmitParameters": "--conf spark.executor.cores=1 \
-                            --conf spark.executor.memory=2g \
+                        "sparkSubmitParameters": "--conf spark.executor.cores=2 \
+                            --conf spark.executor.memory=4g \
                             --conf spark.driver.cores=1 \
-                            --conf spark.driver.memory=2g \
-                            --conf spark.executor.instances=1",
+                            --conf spark.driver.memory=4g \
+                            --conf spark.executor.instances=2",
                     }
                 },
     configuration_overrides = {  
