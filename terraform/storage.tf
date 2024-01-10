@@ -33,3 +33,9 @@ resource "aws_s3_bucket_public_access_block" "public_access_block" {
   ignore_public_acls      = true
   restrict_public_buckets = true
 }
+
+resource "aws_s3_object" "object" {
+  bucket = aws_s3_bucket_public_access_block.public_access_block[4].bucket
+  key    = "Processador.py"
+  source = "../src/jobs/pyspark/Processador.py"
+}

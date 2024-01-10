@@ -15,7 +15,7 @@ from airflow.providers.amazon.aws.operators.emr import (
 )
 
 
-APPLICATION_EMR = "00fg30hapulc9e09"
+APPLICATION_EMR = "00fg5jj1obpne609"
 JOB_ID = "start_emr_serverless_job"
 
 

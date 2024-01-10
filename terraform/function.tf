@@ -38,7 +38,7 @@ module "lambda_layer" {
   source_path = "../src/lambda_layer/python.zip"
 }
 
-# TRIGGER PARA RODAR A LAMBDA FUNCTION A CADA 1h MINUTOS 
+# TRIGGER PARA RODAR A LAMBDA FUNCTION A CADA 1h
 resource "aws_cloudwatch_event_rule" "every_hour" {
     name = "every-minute-jj"
     description = "Fires every hours"
