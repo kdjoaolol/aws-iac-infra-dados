@@ -1,0 +1,32 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Action": [
+          "iam:PassRole",
+          "ec2:CreateRoute",
+          "ec2:CreateSubnet",
+          "ec2:CreateVpcEndpoint",
+          "ec2:CreateSecurityGroup",
+          "ec2:CreateTags",
+          "ec2:CreateVolume",
+          "s3:CreateBucket",
+          "s3:ListBucket",
+          "s3:PutObject",
+          "s3:GetObject",
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents",
+          "ecr:GetAuthorizationToken",
+          "ecr:CreateRepository",
+          "cloudwatch:PutMetricData",
+          "kms:CreateKey",
+          "kms:DescribeKey",
+          "kms:Encrypt",
+          "kms:Decrypt"
+        ],
+        "Effect": "Allow",
+        "Resource": "*"
+      }
+    ]
+  }

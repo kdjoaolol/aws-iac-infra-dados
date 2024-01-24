@@ -34,8 +34,33 @@ resource "aws_s3_bucket_public_access_block" "public_access_block" {
   restrict_public_buckets = true
 }
 
-resource "aws_s3_object" "object" {
+resource "aws_s3_object" "jobs" {
   bucket = aws_s3_bucket_public_access_block.public_access_block[4].bucket
-  key    = "Processador.py"
+  key    = "jobs/"
+  source = "/dev/null"
+}
+
+resource "aws_s3_object" "dag_mwaa" {
+  bucket = aws_s3_bucket_public_access_block.public_access_block[4].bucket
+  key    = "dags/"
+  source = "/dev/null"
+}
+
+resource "aws_s3_object" "jars" {
+  bucket = aws_s3_bucket_public_access_block.public_access_block[4].bucket
+  key    = "jars/"
+  source = "/dev/null"
+}
+
+
+resource "aws_s3_object" "jobs_object" {
+  bucket = aws_s3_bucket_public_access_block.public_access_block[4].bucket
+  key    = "jobs/Processador.py"
   source = "../src/jobs/pyspark/Processador.py"
+}
+
+resource "aws_s3_object" "jars_object" {
+  bucket = aws_s3_bucket_public_access_block.public_access_block[4].bucket
+  key    = "jars/delta-core_2.12-2.0.2.jar"
+  source = "../src/jobs/jars/delta-core_2.12-2.0.2.jar"
 }

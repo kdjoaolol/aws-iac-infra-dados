@@ -56,6 +56,8 @@ resource "aws_iam_role_policy_attachment" "dms-vpc-role-AmazonDMSVPCManagementRo
   role       = aws_iam_role.dms-vpc-role.name
 }
 
+# EMR SERVELESS
+
 resource "aws_iam_role" "emr_serverless_spark" {
   name               = "${local.prefix}_Role_Emr_Serverless_s3_glue"
   path               = "/"
@@ -73,4 +75,25 @@ resource "aws_iam_policy" "emr_serverless_spark" {
 resource "aws_iam_role_policy_attachment" "emr_serverless_spark" {
   role       = aws_iam_role.emr_serverless_spark.name
   policy_arn = aws_iam_policy.emr_serverless_spark.arn
+}
+
+# MWAA
+
+resource "aws_iam_role" "mwaa_role" {
+  name               = "${local.prefix}_role_mwaa"
+  path               = "/"
+  description        = "Role que associa o servico mwaa"
+  assume_role_policy = file("./permissions/mwaa_role.json")
+}
+
+resource "aws_iam_policy" "mwaa_policy" {
+  name        = "${local.prefix}_policy_mwaa"
+  path        = "/"
+  description = "Permissão necessária para o mwaa funcionar"
+  policy      = file("./permissions/mwaa_policy.json")
+}
+
+resource "aws_iam_role_policy_attachment" "mwaa_attachment" {
+  role       = aws_iam_role.mwaa_role.name
+  policy_arn = aws_iam_policy.mwaa_policy.arn
 }

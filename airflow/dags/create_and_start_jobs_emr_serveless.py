@@ -15,7 +15,7 @@ from airflow.providers.amazon.aws.operators.emr import (
 )
 
 
-APPLICATION_EMR = "00fg5jj1obpne609"
+APPLICATION_EMR = "00fghejavp31b909"
 JOB_ID = "start_emr_serverless_job"
 
 
@@ -45,12 +45,14 @@ def create_and_start_jobs_emr_serveless():
     execution_role_arn='arn:aws:iam::628381083261:role/iac_Role_Emr_Serverless_s3_glue',
     job_driver = { 
                     "sparkSubmit": {
-                        "entryPoint": "s3://iac-scripts-jvam-iac/Processador.py",
-                        "sparkSubmitParameters": "--conf spark.executor.cores=2 \
+                        "entryPoint": "s3://iac-scripts-jvam-iac/jobs/Processador.py",
+                        "sparkSubmitParameters": '--conf spark.executor.cores=2 \
                             --conf spark.executor.memory=4g \
                             --conf spark.driver.cores=1 \
                             --conf spark.driver.memory=4g \
-                            --conf spark.executor.instances=2",
+                            --conf spark.executor.instances=2 \
+                            --packages io.delta:delta-core_2.12:2.0.2 \
+                            --jars s3://iac-scripts-jvam-iac/jars/delta-core_2.12-2.0.2.jar'
                     }
                 },
     configuration_overrides = {  
