@@ -38,7 +38,7 @@ module "emr_serverless" {
   }
 
   network_configuration = {
-    subnet_ids = [module.vpc.private_subnets[0], module.vpc.private_subnets[1], module.vpc.private_subnets[2]]
+    subnet_ids = [module.vpc.private_subnets[0], module.vpc.private_subnets[1]]
   }
 
   security_group_name  = "SG-emr-serveless-aplication"

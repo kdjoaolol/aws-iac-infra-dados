@@ -7,7 +7,7 @@ module "database_migration_service" {
   # Subnet group
   repl_subnet_group_name        = "example"
   repl_subnet_group_description = "DMS Subnet group"
-  repl_subnet_group_subnet_ids  = [module.vpc.database_subnets[0], module.vpc.database_subnets[1], module.vpc.database_subnets[2]]
+  repl_subnet_group_subnet_ids  = [module.vpc.database_subnets[0], module.vpc.database_subnets[1]]
 
 
   # Instance
