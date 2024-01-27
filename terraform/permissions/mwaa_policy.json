@@ -10,7 +10,7 @@
           "ecr:*",
           "cloudwatch:*",
           "kms:*",
-          "airflow::*",
+          "airflow:*",
           "sqs:*"
         ],
         "Effect": "Allow",

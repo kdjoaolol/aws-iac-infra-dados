@@ -5,7 +5,7 @@ output "instance_ip_addr" {
 module "mwaa" {
   source = "aws-ia/mwaa/aws"
 
-  name               = "mwaa_infra_dev_v1"
+  name               = "mwaa_infra"
   airflow_version    = "2.7.2"
   environment_class  = "mw1.small"
   create_s3_bucket   = false
